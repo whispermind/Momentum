@@ -175,7 +175,10 @@ body {
   min-height: 260px;  
   padding: 20px;
 }
-
+.slider-icons{
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
 .slider-icon {
   position: absolute;
   top: 50%;
