@@ -22,6 +22,10 @@ export default function stateChange() {
   const STATE = document.querySelector('.state-options');
   const TAGS = document.querySelector('label[for="tags"]');
   const STORAGE = localStorage.getItem('settings');
+  if (STORAGE) {
+    settings = JSON.parse(STORAGE);
+    console.log(settings);
+  }
   const OBSERVER = new Proxy(settings, {
     set: function (target, key, value) {
       target[key] = value;
@@ -39,10 +43,7 @@ export default function stateChange() {
       return true;
     }
   });
-  if (STORAGE) {
-    settings = JSON.parse(STORAGE);
-    
-  }
+
   OPEN.addEventListener('click', event => { STATE.style.transition = '1s ease-in-out'; STATE.style.right = '0' });
   CLOSE.addEventListener('click', event => STATE.style.right = '');
   STATE.addEventListener('change', event => {
