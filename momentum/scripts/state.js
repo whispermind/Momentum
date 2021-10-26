@@ -24,7 +24,7 @@ export default function stateChange() {
   const STORAGE = localStorage.getItem('settings');
   if (STORAGE) {
     settings = JSON.parse(STORAGE);
-    console.log(settings);
+    setStorage();
   }
   const OBSERVER = new Proxy(settings, {
     set: function (target, key, value) {
@@ -52,4 +52,15 @@ export default function stateChange() {
     else { TAGS.style.opacity = ''; TAGS.readonly = ''; TAGS.querySelector('input').disabled = true; };
     localStorage.setItem('settings', JSON.stringify(settings));
   });
+  function setStorage() {
+    const lang = document.querySelector('#lang');
+    const api = document.querySelector('#api');
+    const tags = document.querySelector('#tags').value = settings.tags;
+    const player = document.querySelector('#player').checked = settings.player;
+    const time = document.querySelector('#time').checked = settings.time;
+    const date = document.querySelector('#date').checked = settings.date;
+    const quotes = document.querySelector('#quotes').checked = settings.quotes;
+    const weather = document.querySelector('#weather').checked = settings.weather;
+    const greetings = document.querySelector('#greetings').checked = settings.greetings;
+  }
 }

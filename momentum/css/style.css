@@ -23,6 +23,14 @@ body {
   overflow: hidden;
   transition: opacity 1s ease-in-out;
 }
+footer,
+.date,
+.time,
+.player,
+.weather,
+.greeting-container{
+  transition: opacity 1s ease-in-out;
+}
 
 .header {
   display: flex;
@@ -312,9 +320,6 @@ body {
 
 .author {
   min-height: 20px;
-}
-footer{
-  transition: opacity 1s ease-in-out;
 }
 .state-open{
   position: fixed;

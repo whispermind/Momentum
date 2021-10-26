@@ -7,6 +7,7 @@ export default function timer(update) {
   if (!settings.date) DATE.style.opacity = 0;
   else DATE.style.opacity = '';
   if (!update) updateTime();
+
   function updateTime() {
     const currentDate = new Date();
     TIMER.textContent = currentDate.toLocaleTimeString();
