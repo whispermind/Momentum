@@ -1,7 +1,12 @@
-export default function timer() {
-  const TIMER = document.querySelector('.time'),
-    DATE = document.querySelector('.date');
-  updateTime();
+import { settings } from "./state.js";
+export default function timer(update) {
+  const TIMER = document.querySelector('.time');
+  const DATE = document.querySelector('.date');
+  if (!settings.time) TIMER.style.opacity = 0;
+  else TIMER.style.opacity = '';
+  if (!settings.date) DATE.style.opacity = 0;
+  else DATE.style.opacity = '';
+  if (!update) updateTime();
   function updateTime() {
     const currentDate = new Date();
     TIMER.textContent = currentDate.toLocaleTimeString();

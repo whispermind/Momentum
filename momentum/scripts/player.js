@@ -1,5 +1,7 @@
 import { playList } from "./list.js";
-export default function player() {
+import { settings } from "./state.js";
+export default function player(update) {
+  const CONTAINER = document.querySelector('.player')
   const RANGE = document.querySelector('.player-range');
   const PLAY = document.querySelector('.play');
   const PREV = document.querySelector('.play-prev');
@@ -9,42 +11,43 @@ export default function player() {
   const VOLUME = document.querySelector('.player-volume-range');
   const VOLUME_ICON = document.querySelector('.player-volume-icon');
   let current = 0;
+  if (!settings.player) CONTAINER.style.opacity = '0';
+  else CONTAINER.style.opacity = '';
+  if (!update) {
+    playList.forEach((elem, index) => {
+      const li = document.createElement('li');
+      const button = document.createElement('button');
+      button.classList.add('play', 'list-icon', 'player-icon');
+      li.dataset.index = index;
+      li.classList.add('play-item');
+      li.textContent = elem.title;
+      li.append(button);
+      LIST.append(li);
+    });
 
-  playList.forEach((elem, index) => {
-    const li = document.createElement('li');
-    const button = document.createElement('button');
-    button.classList.add('play', 'list-icon', 'player-icon');
-    li.dataset.index = index;
-    li.classList.add('play-item');
-    li.textContent = elem.title;
-    li.append(button);
-    LIST.append(li);
-  });
+    PLAY.addEventListener('click', starter);
+    NEXT.addEventListener('click', next);
+    PREV.addEventListener('click', previous);
+    AUDIO.addEventListener('ended', next);
+    VOLUME_ICON.addEventListener('click', volumeToggle);
+    LIST.addEventListener('click', listToggle);
 
-  PLAY.addEventListener('click', starter);
-  NEXT.addEventListener('click', next);
-  PREV.addEventListener('click', previous);
-  AUDIO.addEventListener('ended', next);
-  VOLUME_ICON.addEventListener('click', volumeToggle);
-  LIST.addEventListener('click', listToggle);
-
-  RANGE.addEventListener('change', event => AUDIO.currentTime = event.target.value);
-
-  AUDIO.addEventListener('timeupdate', event => {
-    const POSITION = Math.round(event.target.currentTime);
+    RANGE.addEventListener('change', event => AUDIO.currentTime = event.target.value);
+    AUDIO.addEventListener('timeupdate', timeUpdate);
+    VOLUME.addEventListener('change', event => {
+      AUDIO.removeEventListener('timeupdate', timeUpdate);
+      AUDIO.volume = event.target.value;
+      VOLUME.dataset.volume = event.target.value;
+      if (!AUDIO.volume) VOLUME_ICON.classList.add('volume-off');
+      else VOLUME_ICON.classList.remove('volume-off');
+    });
+  }
+  setSong();
+  function timeUpdate(event) {
+    const POSITION = Math.floor(event.target.currentTime);
     RANGE.value = POSITION;
     RANGE.dataset.current = `${POSITION}s / ${playList[current].duration}s`;
-  });
-
-  VOLUME.addEventListener('change', event => {
-    AUDIO.volume = event.target.value;
-    VOLUME.dataset.volume = event.target.value;
-    if (!AUDIO.volume) VOLUME_ICON.classList.add('volume-off');
-    else VOLUME_ICON.classList.remove('volume-off');
-  });
-
-  setSong();
-
+  }
   function listToggle(event) {
     let elemIndex = Number(event.target.closest('.play-item').dataset.index);
     if (elemIndex === current) {
@@ -65,6 +68,7 @@ export default function player() {
       VOLUME.value = VOLUME.dataset.volume;
     }
     else {
+      VOLUME.dataset.volume = AUDIO.volume;
       AUDIO.volume = 0;
       VOLUME.value = 0;
     }

@@ -58,6 +58,38 @@
       <div class="author"></div>
     </div>
   </footer>
+  <button class="state-open">
+    state
+  </button>
+  <div class="state-options">
+    <h2>Options</h2>
+    <label for="lang">
+      Language:
+      <select name="lang" id="lang">
+        <option value="english" selected>english</option>
+        <option value="russian">russian</option>
+      </select>
+    </label>
+    <label for="api">
+      Image API:
+      <select name="source" id="api">
+        <option value="git">git</option>
+        <option value="unsplash">unsplash</option>
+        <option value="flickr">flickr</option>
+      </select>
+    </label>
+    <label for="tags">
+      Tags:
+      <input id="tags" type="text" disabled>
+    </label>
+    <label for="weather">Weather:<input type="checkbox" name="weather" id="weather" checked></label>
+    <label for="quotes">Quotes:<input type="checkbox" name="quotes" id="quotes" checked></label>
+    <label for="player">Player:<input type="checkbox" name="player" id="player" checked></label>
+    <label for="time">Time:<input type="checkbox" name="time" id="time" checked></label>
+    <label for="greetings">Greetings:<input type="checkbox" name="greetings" id="greetings" checked></label>
+    <label for="date">Date:<input type="checkbox" name="date" id="date" checked></label>
+    <button class="state-close">X</button>
+  </div>
   <script type="module" src="./scripts/index.js"></script>
 </body>
 

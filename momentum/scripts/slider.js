@@ -1,4 +1,5 @@
 import { getDayTime } from "./greetings.js";
+import { settings } from "./state.js";
 export default async function slider() {
   let current = getRandomInt(1, 19);
   document.body.style.backgroundImage = `url(https://raw.githubusercontent.com/whispermind/stage1-tasks/assets/images/${getDayTime()}/${current < 10 ? '0' + current : current}.jpg)`;
@@ -9,7 +10,6 @@ export default async function slider() {
   const UNSPLASH_URLS = UNSPLASH_RESPONSE.results;
   let processed = false;
   SLIDER_NAV.style.opacity = 1;
-
   SLIDER_NAV.addEventListener('click', event => {
     if (processed) return
     processed = true;
