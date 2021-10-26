@@ -17,6 +17,7 @@ export default function weather() {
   async function setWeather(city) {
     const info = await getWeather(city);
     if (info.cod !== 200) {
+      ERROR.textContent = info.message;
       clearWeather();
       return
     }
@@ -28,7 +29,6 @@ export default function weather() {
     ICON.classList.add(`owf-${info.weather[0].id}`);
   }
   function clearWeather() {
-    ERROR.textContent = info.message;
     TEMPERATURE.textContent = '';
     DESCRIPTION.textContent = '';
     HUMIDITY.textContent = '';
