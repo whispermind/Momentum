@@ -31,7 +31,7 @@ export default async function slider() {
     img.src = url;
     img.onload = () => {
       document.body.style.backgroundImage = `url(${url})`;
-      setTimeout(() => processed = false, 2000);
+      setTimeout(() => processed = false, 1500);
     };
   }
 }
