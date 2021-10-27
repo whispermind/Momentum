@@ -58,7 +58,7 @@ export default function stateChange() {
     if (settings.api !== 'git') {
       let tag = document.querySelector('label[for="tags"]');
       tag.style.opacity = 1;
-      tag.disabled = false;
+      tag.querySelector('input').disabled = false;
     }
     document.querySelector('#tags').value = settings.tags;
     document.querySelector('#player').checked = settings.player;
