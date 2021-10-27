@@ -8,8 +8,8 @@ export function greetings(update) {
     storageName();
     updateTime();
   }
-  function updateTime() {
-    GREETINGS_MESSAGE.textContent = `Good ${getDayTime()}`;
+  async function updateTime() {
+    GREETINGS_MESSAGE.textContent = `${settings.lang === 'russian' ? 'Гуд' : 'Good'} ${settings.lang === 'russian' ? getDayTime(true) : getDayTime()}`;
     setTimeout(updateTime, 60000);
   }
 }
@@ -21,7 +21,7 @@ function storageName() {
     localStorage.setItem('username', event.target.value);
   });
 }
-export function getDayTime() {
-  const DAYTIME = ['night', 'morning', 'afternoon', 'evening'];
-  return DAYTIME[Math.floor(new Date().getHours() / 6)];
+export function getDayTime(russian) {
+  const DAYTIME = ['night', 'morning', 'afternoon', 'evening', 'ночи', 'утра', 'дня', 'вечера'];
+  return russian ? DAYTIME[Math.floor(new Date().getHours() / 6) + 4] : DAYTIME[Math.floor(new Date().getHours() / 6)];
 }

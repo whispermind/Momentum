@@ -53,14 +53,14 @@ export default function stateChange() {
     localStorage.setItem('settings', JSON.stringify(settings));
   });
   function setStorage() {
-    const lang = document.querySelector('#lang');
-    const api = document.querySelector('#api');
-    const tags = document.querySelector('#tags').value = settings.tags;
-    const player = document.querySelector('#player').checked = settings.player;
-    const time = document.querySelector('#time').checked = settings.time;
-    const date = document.querySelector('#date').checked = settings.date;
-    const quotes = document.querySelector('#quotes').checked = settings.quotes;
-    const weather = document.querySelector('#weather').checked = settings.weather;
-    const greetings = document.querySelector('#greetings').checked = settings.greetings;
+    document.querySelector(`option[value=${settings.lang}]`).selected = true;
+    document.querySelector(`option[value=${settings.api}]`).selected = true;
+    document.querySelector('#tags').value = settings.tags;
+    document.querySelector('#player').checked = settings.player;
+    document.querySelector('#time').checked = settings.time;
+    document.querySelector('#date').checked = settings.date;
+    document.querySelector('#quotes').checked = settings.quotes;
+    document.querySelector('#weather').checked = settings.weather;
+    document.querySelector('#greetings').checked = settings.greetings;
   }
 }

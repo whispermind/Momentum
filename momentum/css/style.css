@@ -21,7 +21,6 @@ body {
   background-blend-mode: multiply;
   transition: background 1.5s ease-in-out;
   overflow: hidden;
-  transition: opacity 1s ease-in-out;
 }
 footer,
 .date,
@@ -229,10 +228,6 @@ footer,
   height: 40vh;
   min-height: 260px;  
   padding: 20px;
-}
-.slider-icons{
-  opacity: 0;
-  transition: opacity 2s ease-in-out;
 }
 .slider-icon {
   position: absolute;
