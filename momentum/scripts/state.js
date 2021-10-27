@@ -55,7 +55,11 @@ export default function stateChange() {
   function setStorage() {
     document.querySelector(`option[value=${settings.lang}]`).selected = true;
     document.querySelector(`option[value=${settings.api}]`).selected = true;
-    if (settings.api !== 'git') document.querySelector('label[for="tags"]').style.opacity = 1;
+    if (settings.api !== 'git') {
+      let tag = document.querySelector('label[for="tags"]');
+      tag.style.opacity = 1;
+      tag.disabled = false;
+    }
     document.querySelector('#tags').value = settings.tags;
     document.querySelector('#player').checked = settings.player;
     document.querySelector('#time').checked = settings.time;
