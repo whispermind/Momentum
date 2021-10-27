@@ -6,7 +6,7 @@ import quotes from "./quotes.js";
 import player from "./player.js";
 
 export let settings = {
-  lang: 'en',
+  lang: 'english',
   api: 'git',
   tags: '',
   player: true,
