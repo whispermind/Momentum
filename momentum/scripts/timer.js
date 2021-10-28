@@ -1,5 +1,6 @@
-import { settings } from "./state.js";
-export default function timer(update) {
+export default async function timer(update) {
+  const { settings } = await import("./state.js");
+  const { translation } = await import("./translate.js");
   const TIMER = document.querySelector('.time');
   const DATE = document.querySelector('.date');
   if (!settings.time) TIMER.style.opacity = 0;
@@ -7,11 +8,10 @@ export default function timer(update) {
   if (!settings.date) DATE.style.opacity = 0;
   else DATE.style.opacity = '';
   if (!update) updateTime();
-
   function updateTime() {
     const currentDate = new Date();
-    TIMER.textContent = currentDate.toLocaleTimeString();
-    DATE.textContent = currentDate.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+    TIMER.textContent = currentDate.toLocaleTimeString(translation[settings.lang].time);
+    DATE.textContent = currentDate.toLocaleDateString(translation[settings.lang].time, { weekday: 'long', month: 'long', day: 'numeric' });
     setTimeout(updateTime, 1000);
   }
 }

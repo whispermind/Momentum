@@ -30,7 +30,7 @@ export default function stateChange() {
     set: function (target, key, value) {
       target[key] = value;
       switch (key) {
-        case 'lang': break;
+        case 'lang': weather(true); greetings(true); break;
         case 'api': slider(true); break;
         case 'tags': slider(true); break;
         case 'player': player(true); break;
