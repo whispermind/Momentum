@@ -10,6 +10,7 @@ export default function player(update) {
   const LIST = document.querySelector('.play-list');
   const VOLUME = document.querySelector('.player-volume-range');
   const VOLUME_ICON = document.querySelector('.player-volume-icon');
+  let debounce = false;
   let current = 0;
   if (!settings.player) CONTAINER.style.opacity = '0';
   else CONTAINER.style.opacity = '';
@@ -32,10 +33,12 @@ export default function player(update) {
     VOLUME_ICON.addEventListener('click', volumeToggle);
     LIST.addEventListener('click', listToggle);
 
-    RANGE.addEventListener('change', event => AUDIO.currentTime = event.target.value);
+    RANGE.addEventListener('change', event => {
+      AUDIO.currentTime = event.target.value;
+      RANGE.dataset.current = `${Math.floor(AUDIO.currentTime)}s / ${playList[current].duration}s`;
+    });
     AUDIO.addEventListener('timeupdate', timeUpdate);
     VOLUME.addEventListener('change', event => {
-      AUDIO.removeEventListener('timeupdate', timeUpdate);
       AUDIO.volume = event.target.value;
       VOLUME.dataset.volume = event.target.value;
       if (!AUDIO.volume) VOLUME_ICON.classList.add('volume-off');
@@ -43,7 +46,11 @@ export default function player(update) {
     });
   }
   setSong();
+
   function timeUpdate(event) {
+    if(debounce) return
+    debounce = true;
+    setTimeout(() => debounce = false, 1000);
     const POSITION = Math.floor(event.target.currentTime);
     RANGE.value = POSITION;
     RANGE.dataset.current = `${POSITION}s / ${playList[current].duration}s`;

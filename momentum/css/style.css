@@ -38,7 +38,7 @@ footer,
   width: 100%;
   height: 30vh;
   min-height: 220px;  
-  padding: 20px;
+  padding: 20px 20px 0;
 }
 .player-controls {
   display: flex;
@@ -58,12 +58,14 @@ footer,
   top: -15px;
   width: 100%;
   position: absolute;
+  pointer-events: none;
 }
 .player-range::after{
   content: attr(data-current);
   bottom: -15px;
   width: 100%;
   position: absolute;
+  pointer-events: none;
 }
 .player-ranges{
   display: flex;
@@ -325,7 +327,15 @@ footer,
   background-color: transparent;
   color: white;
   border: none;
+  min-width: 50px;
 }
+.state-open img{
+  transition: transform 1s ease-in-out;
+}
+.state-open:hover > img{
+  transform: rotate(360deg);
+}
+
 .state-options{
   position: relative;
   display: flex;
