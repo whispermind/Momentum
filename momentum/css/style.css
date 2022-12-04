@@ -41,7 +41,6 @@ input {
   align-items: flex-start;
   width: 100%;
   min-height: 30vh;
-  min-height: 220px;  
   padding: 20px;
 }
 .player-controls {
