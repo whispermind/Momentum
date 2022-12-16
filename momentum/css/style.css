@@ -8,18 +8,29 @@
   margin: 0;
   padding: 0;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+select:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
-  min-width: 480px;
-  min-height: 100vh;
   font-family: 'Arial', sans-serif;
   font-size: 16px;
   color: #fff;
   text-align: center;
-  background: center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
-  transition: background 1.5s ease-in-out;
+  transition: background-image 1.5s ease-in-out;
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow: hidden;
 }
 footer,
@@ -40,8 +51,8 @@ input {
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  min-height: 30vh;
-  padding: 20px;
+  padding: 20px 20px 0;
+  min-height: 35vh;
 }
 .player-controls {
   display: flex;
@@ -55,6 +66,7 @@ input {
   font-family: Arial, sans-serif;
   text-transform: capitalize;
   text-align: center;
+  margin-top: 20px;
 }
 .player-range::before{
   content: attr(data-song);
@@ -74,7 +86,6 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
 }
 .player-volume{
   display: flex;
@@ -90,13 +101,14 @@ input {
 }
 
 .play-list {
-  margin-top: 30px;
   text-align: left;
+  margin-top: 20px;
 }
 
 .play-item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: relative;
   padding: 5px;
   padding-left: 20px;
@@ -135,7 +147,7 @@ input {
   outline: 0;
   opacity: .8;
   cursor: pointer;
-  transition: .3s;  
+  transition: .3s;
 }
 
 .player-icon:hover,
@@ -189,7 +201,6 @@ input {
 }
 
 .weather-error {
-  margin-top: -10px;
 }
 
 .description-container {
@@ -215,6 +226,7 @@ input {
   outline: 0;
   border-bottom: 1px solid #fff;
   background-color: transparent;
+  text-transform: capitalize;
 }
 
 .city::placeholder {  
@@ -224,20 +236,16 @@ input {
 }
 
 .main {
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 40vh;
-  min-height: 260px;  
-  padding: 20px;
+  min-height: 30vh;
 }
 .slider-icon {
   position: absolute;
   top: 50%;
-  margin-top: -16px;
   cursor: pointer;
 }
 
@@ -253,7 +261,6 @@ input {
 
 .time {
   min-height: 124px;
-  margin-bottom: 10px;
   font-family: 'Arial-MT';
   font-size: 100px;
   letter-spacing: -4px;  
@@ -262,7 +269,6 @@ input {
 .date {
   min-height: 28px;
   font-size: 24px;
-  margin-bottom: 20px;
 }
 
 .greeting-container {
@@ -273,6 +279,10 @@ input {
   min-height: 48px;
   width: 100vw;
   font-size: 40px;
+}
+
+.greeting-container input:focus::placeholder{
+  color: transparent;
 }
 
 .greeting {
@@ -304,27 +314,28 @@ input {
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  height: 30vh;
-  min-height: 160px;
-  padding: 20px;
+  min-height: 35vh;
+  padding-bottom: 20px;
 }
 
 .change-quote {
-  margin-bottom: 30px;
   background-image: url("../assets/svg/reload.svg");
 }
 
 .quote {
-  min-height: 32px;
+  padding: 20px 0;
+  max-width: 65%;
+  margin: 0 auto;
 }
 
 .author {
   min-height: 20px;
 }
+
 .state-open{
   position: fixed;
   right: 5%;
-  bottom: 5%;
+  bottom: 9%;
   font-size: 3rem;
   cursor: pointer;
   background-color: transparent;
@@ -340,26 +351,25 @@ input {
 }
 
 .state-options{
-  position: relative;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: absolute;
+  row-gap: 20px;
   top: 0;
-  right: -30%;
+  right: -20vw;
   height: 100vh;
-  width: 30%;
+  width: 20vw;
   background-color: rgba(0, 0, 0, 0.5);
 }
 .state-options label{
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
-  width: 250px;
+  width: 200px;
 }
-.state-options select{
-  width: 80px;
+.state-options select, .state-options input[type="text"] {
+  width: 50%;
   align-self: flex-end;
 }
 
@@ -372,6 +382,13 @@ input {
 }
 label[for="tags"]{
   opacity: 0;
+}
+
+@media (max-width: 1440px) {
+  .state-options{
+    width: 30vw;
+    right: -30vw;
+  }
 }
 
 @media (max-width: 768px) {
@@ -392,5 +409,70 @@ label[for="tags"]{
   .name {
     font-size: 32px;
     padding: 5px;
+  }
+
+  .state-options{
+    width: 40vw;
+    right: -40vw;
+  }
+}
+
+@media (max-width: 640px) {
+  .header{
+    padding: 5px 5px 0;
+  }
+  .player-range{
+    width: 180px;
+  }
+  .weather{
+    align-items: center;
+    text-align: center;
+  }
+  .city{
+    width: 100px;
+    text-align: center;
+  }
+  .state-options{
+    width: 60vw;
+    right: -60vw;
+  }
+  .greeting-container{
+    flex-direction: column;
+    text-align: center;
+  }
+  .greeting-container input{
+    max-width: 200px;
+  }
+  .time{
+    font-size: 64px;
+  }
+  .slide-next{
+    right: 5px;
+  }
+  .slide-prev{
+    left: 5px;
+  }
+  .state-icon{
+    width: 36px;
+  }
+}
+
+@media (max-width: 420px){
+  .player-range{
+    width: 130px;
+  }
+
+  .player-volume-range{
+    width: 100px;
+  }
+  .city{
+    width: 60px;
+  }
+  .description-container{
+    justify-content: center;
+  }
+  .state-options{
+    width: 70vw;
+    right: -70vw;
   }
 }

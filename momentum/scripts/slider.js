@@ -2,6 +2,8 @@ import { getDayTime } from "./greetings.js";
 const SLIDER_NAV = document.querySelector(".slider-icons");
 let unsplash = null;
 let flickr = null;
+import { settings } from "./state.js";
+
 export default async function slider(update) {
   const { settings } = await import("./state.js");
   if (settings.api === "unsplash") {
@@ -10,8 +12,18 @@ export default async function slider(update) {
         settings.tags ? settings.tags : await getDayTime()
       }&per_page=20`
     );
-    if (data.results.length) unsplash = data;
-    else alert("there are no data for requested tags");
+    if (data?.results?.length) {
+      unsplash = data;
+      if (update) {
+        SLIDER_NAV.dataset.current =
+          getRandomInt(0, data.results.length - 1) || 0;
+        setImage();
+      }
+    } else {
+      alert("there is no data for requested tags");
+      settings.tags = "";
+      tags.value = "";
+    }
   }
   if (settings.api === "flickr") {
     const data = await getData(
@@ -19,8 +31,19 @@ export default async function slider(update) {
         settings.tags ? settings.tags : await getDayTime()
       }&extras=url_l&format=json&nojsoncallback=1&per_page=20`
     );
-    if (data.photos.photo.length) flickr = data;
-    else alert("there are no data for requested tags");
+    if (data.photos.photo.length) {
+      flickr = data;
+
+      if (update) {
+        SLIDER_NAV.dataset.current =
+          getRandomInt(0, data.photos.photo.length - 1) || 0;
+        setImage();
+      }
+    } else if (update) {
+      alert("there is no data for requested tags");
+      settings.tags = "";
+      tags.value = "";
+    }
   }
   let processed = false;
   if (!update) sliderInit();
@@ -50,30 +73,42 @@ export default async function slider(update) {
   function sliderInit() {
     const dataLength =
       settings.api === "unsplash"
-        ? unsplash?.results.length
+        ? unsplash?.results?.length
         : settings.api === "flickr"
-        ? flickr?.photos.photo.length
+        ? flickr?.photos?.photo.length
         : 19;
-    SLIDER_NAV.dataset.current = getRandomInt(0, dataLength);
+    SLIDER_NAV.dataset.current = getRandomInt(0, dataLength) || 0;
     SLIDER_NAV.addEventListener("click", async function (event) {
-      if (processed) return;
+      const dataLength =
+        settings.api === "unsplash"
+          ? unsplash?.results?.length
+          : settings.api === "flickr"
+          ? flickr?.photos?.photo?.length
+          : 19;
+      if (processed || !dataLength) return;
       processed = true;
+
       if (event.target.classList.contains("slide-prev"))
         SLIDER_NAV.dataset.current--;
+
       if (event.target.classList.contains("slide-next"))
         SLIDER_NAV.dataset.current++;
-      if (SLIDER_NAV.dataset.current > dataLength)
+
+      if (+SLIDER_NAV.dataset.current === dataLength)
         SLIDER_NAV.dataset.current = 0;
+
       if (SLIDER_NAV.dataset.current < 0)
         SLIDER_NAV.dataset.current = dataLength - 1;
       setImage();
     });
-    setImage();
+    if (dataLength) setImage();
   }
 }
 async function getData(url) {
-  const RESPONSE = await fetch(url);
-  return await RESPONSE.json();
+  try {
+    const RESPONSE = await fetch(url);
+    return await RESPONSE.json();
+  } catch (e) {}
 }
 function getRandomInt(min, max) {
   min = Math.ceil(min);

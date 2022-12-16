@@ -67,7 +67,10 @@ export default function stateChange() {
     STATE.style.transition = "1s ease-in-out";
     STATE.style.right = "0";
   });
-  CLOSE.addEventListener("click", (event) => (STATE.style.right = ""));
+  CLOSE.addEventListener(
+    "click",
+    (event) => ((STATE.style.right = ""), (STATE.style.transiton = ""))
+  );
   STATE.addEventListener("change", (event) => {
     OBSERVER[event.target.id] =
       event.target.value === "on" ? event.target.checked : event.target.value;
