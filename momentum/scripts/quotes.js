@@ -10,15 +10,20 @@ export default function quotes(update) {
     BUTTON.click();
   }
   async function quoteUpdate() {
-    let quote = await getQuote();
-    setQuote(quote.value);
+    let { quoteAuthor, quoteText } = await getQuote();
+    setQuote(quoteText, quoteAuthor);
   }
-  function setQuote(quote, author = "Chuck Norris") {
+  function setQuote(quote, author) {
     QUOTE_CONTRAINER.textContent = quote + ` \n © ${author}`;
   }
   async function getQuote() {
+    const corsProxy = "https://cors-anywhere.herokuapp.com/";
+    const api = `api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=${settings.lang.slice(
+      0,
+      2
+    )}`;
     try {
-      const RESPONSE = await fetch("https://api.chucknorris.io/jokes/random");
+      const RESPONSE = await fetch(corsProxy + api);
       return await RESPONSE.json();
     } catch (e) {}
   }
