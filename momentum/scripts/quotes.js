@@ -10,20 +10,26 @@ export default function quotes(update) {
     BUTTON.click();
   }
   async function quoteUpdate() {
-    let { quoteAuthor, quoteText } = await getQuote();
-    setQuote(quoteText, quoteAuthor);
+    let { content, originator } = await getQuote();
+    setQuote(content, originator.name);
   }
   function setQuote(quote, author) {
     QUOTE_CONTRAINER.textContent = quote + ` \n © ${author}`;
   }
   async function getQuote() {
-    const corsProxy = "https://cors-anywhere.herokuapp.com/";
-    const api = `api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=${settings.lang.slice(
+    const api = `https://quotes15.p.rapidapi.com/quotes/random/?language_code=${settings.lang.slice(
       0,
       2
     )}`;
+
     try {
-      const RESPONSE = await fetch(corsProxy + api);
+      const RESPONSE = await fetch(api, {
+        headers: {
+          "X-RapidAPI-Key":
+            "511806d988msh3b2ecfb6d3bf7c9p1f1fa7jsnedead4564e84",
+          "X-RapidAPI-Host": "quotes15.p.rapidapi.com",
+        },
+      });
       return await RESPONSE.json();
     } catch (e) {}
   }
